@@ -2,7 +2,7 @@
 
 > A premium, cyberpunk-luxury personal portfolio website built with pure HTML5, CSS3, and Vanilla JavaScript. No frameworks. No dependencies. Just clean, performant code.
 
-![Portfolio Preview](https://your-domain.com/assets/images/og-image.png)
+![Portfolio Preview](https://sb-sajal.github.io/assets/images/og-image.png)
 
 ## 🚀 Features
 
@@ -116,7 +116,7 @@ User-agent: *
 Allow: /
 Disallow: /404.html
 
-Sitemap: https://your-domain.com/sitemap.xml
+Sitemap: https://sb-sajal.github.io/sitemap.xml
 ```
 
 ### sitemap.xml
@@ -126,7 +126,7 @@ Create a `sitemap.xml` file:
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.w3.org/2000/svg">
   <url>
-    <loc>https://your-domain.com/</loc>
+    <loc>https://sb-sajal.github.io/</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>

@@ -2120,6 +2120,25 @@ ul { list-style: none; }
   font-size: 0.8rem;
 }
 
+.resume__preview-frame {
+  display: none;
+  width: 100%;
+  aspect-ratio: 1 / 1.35;
+  max-height: 700px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* Shown only once JS confirms assets/resume/resume.pdf actually exists */
+.resume__preview.has-resume .resume__preview-frame {
+  display: block;
+}
+
+.resume__preview.has-resume .resume__preview-placeholder {
+  display: none;
+}
+
 /* ========== FOOTER ========== */
 .footer {
   padding: 3rem 0 1.5rem;

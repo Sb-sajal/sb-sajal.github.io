@@ -126,7 +126,7 @@ Create a `sitemap.xml` file:
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.w3.org/2000/svg">
   <url>
-    <loc>https://sb-sajal.github.io/</loc>
+    <loc>https://username.github.io/</loc>
     <lastmod>2024-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>

@@ -2093,50 +2093,25 @@ ul { list-style: none; }
 }
 
 .resume__preview {
-  padding: 3rem;
-  margin-bottom: 2rem;
-}
-
-.resume__preview-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  color: var(--text-tertiary);
-}
-
-.resume__preview-placeholder svg {
-  width: 64px;
-  height: 64px;
-  opacity: 0.4;
-}
-
-.resume__preview-placeholder p {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-}
-
-.resume__preview-placeholder span {
-  font-size: 0.8rem;
-}
-
-.resume__preview-frame {
-  display: none;
-  width: 100%;
-  aspect-ratio: 1 / 1.35;
-  max-height: 700px;
-  border: none;
-  border-radius: 8px;
-  background: #fff;
-}
-
-/* Shown only once JS confirms assets/resume/resume.pdf actually exists */
-.resume__preview.has-resume .resume__preview-frame {
   display: block;
+  padding: 0.75rem;
+  margin-bottom: 2rem;
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
-.resume__preview.has-resume .resume__preview-placeholder {
-  display: none;
+.resume__preview:hover,
+.resume__preview:focus-visible {
+  transform: translateY(-4px);
+}
+
+.resume__preview-image {
+  width: 100%;
+  max-width: 480px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 /* ========== FOOTER ========== */

@@ -1,72 +1,262 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 — Page Not Found | Sajal Baiddya</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0e1621">
+<title>404 · Page not found — Sajal Baiddya</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      var t = localStorage.getItem('theme');
+      if (!t && window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
+      if (t) d.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
 <style>
   :root{
-    --bg:#0B0B0B; --text:#F2F5F3; --text-muted:#9BA3A8;
-    --neon-green:#3DFFB0; --sky-blue:#4FD8FF; --accent-red:#FF3B5C;
-    --font-display:'Space Grotesk',sans-serif; --font-body:'Inter',sans-serif; --font-mono:'JetBrains Mono',monospace;
+    --bg:#0e1621; --surface:#172233; --line:rgba(255,255,255,.1); --text:#eef2f7; --muted:#9aa7b8;
+    --accent:#6f95ff; --accent-strong:#88a8ff; --on-accent:#07101f; --ok:#3ccf9b; --err:#ff7a8a; --warn:#ffd479;
+    --glow:rgba(79,124,255,.18);
+    --mono:ui-monospace,SFMono-Regular,"JetBrains Mono",Menlo,Consolas,monospace;
   }
-  *{ box-sizing:border-box; }
-  html{ overflow-x:hidden; max-width:100%; overscroll-behavior-x:none; }
+  :root[data-theme="light"]{
+    --bg:#f6f7f9; --surface:#ffffff; --line:rgba(14,22,33,.12); --text:#0e1621; --muted:#526071;
+    --accent:#2c55e0; --accent-strong:#2447c4; --on-accent:#fff; --ok:#0f8f66; --err:#c62f45; --warn:#9a6b00;
+    --glow:rgba(44,85,224,.12);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{height:100%}
   body{
-    margin:0; min-height:100vh; background:var(--bg); color:var(--text); font-family:var(--font-body);
-    display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem;
-    overflow:hidden; max-width:100%; overscroll-behavior-x:none; position:relative;
+    margin:0; background:var(--bg); color:var(--text); overflow-x:hidden;
+    font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:2rem 1rem 5rem;
   }
   body::before{
-    content:''; position:absolute; inset:-20%; z-index:0;
-    background:radial-gradient(circle at 30% 30%, rgba(61,255,176,.12), transparent 45%),
-               radial-gradient(circle at 75% 70%, rgba(79,216,255,.1), transparent 45%);
+    content:""; position:fixed; width:720px; height:720px; left:50%; top:-260px; margin-left:-360px; border-radius:50%;
+    background:radial-gradient(circle,var(--glow),transparent 65%); pointer-events:none; animation:drift 14s ease-in-out infinite alternate;
   }
-  .wrap{ position:relative; z-index:1; max-width:560px; }
-  .glitch{
-    font-family:var(--font-mono); font-size:clamp(4rem,14vw,7rem); font-weight:700; margin:0;
-    color:var(--neon-green); text-shadow:0 0 24px rgba(61,255,176,.5);
-    animation: glitch 2.4s infinite;
+  @keyframes drift{to{transform:translate(60px,50px) scale(1.1)}}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  .bg-float{position:fixed;inset:0;overflow:hidden;pointer-events:none;user-select:none;z-index:0}
+  .bg-float span{position:absolute;left:var(--x);top:100%;white-space:nowrap;font:var(--fs,13px) var(--mono);color:var(--muted);opacity:0;
+    animation:float-up var(--dur,40s) linear var(--delay,0s) infinite;will-change:transform,opacity}
+  @keyframes float-up{
+    0%{transform:translate3d(0,0,0);opacity:0}10%{opacity:var(--o,.1)}90%{opacity:var(--o,.1)}
+    100%{transform:translate3d(var(--dx,30px),calc(-100vh - 140px),0);opacity:0}
   }
-  @keyframes glitch{
-    0%,100%{ transform:translate(0,0); }
-    92%{ transform:translate(0,0); }
-    93%{ transform:translate(-3px,2px); color:var(--sky-blue); }
-    94%{ transform:translate(3px,-2px); color:var(--accent-red); }
-    95%{ transform:translate(0,0); color:var(--neon-green); }
+
+  main{position:relative;z-index:1;width:100%;max-width:640px;display:flex;flex-direction:column;align-items:center;text-align:center}
+
+  .glitch{position:relative;margin:0;font:700 clamp(5.5rem,24vw,10rem)/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:-.04em;color:var(--text);user-select:none}
+  .glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none;opacity:.9}
+  .glitch::before{color:var(--accent);clip-path:inset(0 0 100% 0);animation:glitch-a 4.2s infinite steps(1)}
+  .glitch::after{color:var(--err);clip-path:inset(0 0 100% 0);animation:glitch-b 4.2s infinite steps(1)}
+  @keyframes glitch-a{
+    0%,86%,100%{clip-path:inset(0 0 100% 0);transform:none}
+    87%{clip-path:inset(12% 0 62% 0);transform:translate(-6px,0)}
+    90%{clip-path:inset(58% 0 14% 0);transform:translate(5px,0)}
+    93%{clip-path:inset(30% 0 40% 0);transform:translate(-4px,0)}
+    96%{clip-path:inset(0 0 100% 0);transform:none}
   }
-  .bug{ font-size:3rem; margin:0 0 1rem; }
-  h1.title{ font-family:var(--font-display); font-size:1.5rem; margin:1rem 0 .5rem; }
-  p{ color:var(--text-muted); margin-bottom:2rem; }
-  .terminal{
-    text-align:left; font-family:var(--font-mono); font-size:.85rem; background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:1rem 1.2rem; margin-bottom:2rem;
-    backdrop-filter:blur(12px); color:var(--text-muted);
+  @keyframes glitch-b{
+    0%,87%,100%{clip-path:inset(0 0 100% 0);transform:none}
+    88%{clip-path:inset(46% 0 30% 0);transform:translate(6px,0)}
+    91%{clip-path:inset(8% 0 70% 0);transform:translate(-5px,0)}
+    94%{clip-path:inset(66% 0 8% 0);transform:translate(4px,0)}
+    97%{clip-path:inset(0 0 100% 0);transform:none}
   }
-  .terminal span{ color:var(--sky-blue); }
-  .btn{
-    display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.8rem; border-radius:99px;
-    background:linear-gradient(135deg,var(--neon-green),var(--sky-blue)); color:#03150d; font-weight:600;
-    text-decoration:none; transition:transform .2s ease, box-shadow .2s ease;
+  .sub{margin:.4rem 0 1.6rem;color:var(--muted);font-size:1.05rem}
+
+  .term{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    box-shadow:0 24px 50px -28px rgba(0,0,0,.7);animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .term__bar{display:flex;align-items:center;gap:.4rem;padding:.65rem .9rem;border-bottom:1px solid var(--line)}
+  .term__bar i{width:11px;height:11px;border-radius:50%}
+  .term__bar i:nth-child(1){background:#ff5f57}.term__bar i:nth-child(2){background:#febc2e}.term__bar i:nth-child(3){background:#28c840}
+  .term__bar b{margin-left:.6rem;font:500 .8rem var(--mono);color:var(--muted)}
+  .term pre{margin:0;padding:1rem 1.1rem 1.2rem;min-height:15.5rem;font:.9rem/1.7 var(--mono);white-space:pre-wrap;word-break:break-word}
+  .p{color:var(--ok)}.e{color:var(--err)}.w{color:var(--warn)}.m{color:var(--muted)}
+  .caret{display:inline-block;width:.55em;height:1.1em;margin-left:2px;vertical-align:-.2em;background:var(--accent);animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem;margin-top:1.6rem;min-height:3.2rem;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+  .actions.on{opacity:1;transform:none}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font:600 1rem system-ui,sans-serif;text-decoration:none;cursor:pointer;
+    border:1px solid transparent;transition:transform .2s,background-color .2s,border-color .2s,box-shadow .25s}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .btn--primary{background:var(--accent);color:var(--on-accent)}
+  .btn--ghost{background:transparent;color:var(--text);border-color:var(--line)}
+  .btn kbd{font:.8rem var(--mono);padding:.05rem .4rem;border:1px solid var(--line);border-radius:6px;opacity:.85}
+  @media (hover:hover){
+    .btn:hover{transform:translateY(-2px)}
+    .btn--primary:hover{background:var(--accent-strong);box-shadow:0 10px 24px -10px var(--accent)}
+    .btn--ghost:hover{border-color:var(--muted)}
   }
-  .btn:hover{ transform:translateY(-3px); box-shadow:0 0 24px rgba(61,255,176,.4); }
-  @media (prefers-reduced-motion: reduce){ .glitch{ animation:none; } }
+  .btn:active{transform:scale(.97)}
+  .shake{animation:shake .4s ease}
+  @keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+  .quip{min-height:1.6em;margin:1.1rem 0 0;font:.88rem var(--mono);color:var(--muted)}
+
+  .bug{position:fixed;bottom:.6rem;left:0;z-index:2;width:34px;height:34px;padding:0;border:0;background:none;cursor:pointer;color:var(--err);
+    animation:crawl 16s linear infinite}
+  .bug svg{width:100%;height:100%;display:block;animation:wiggle .35s ease-in-out infinite alternate}
+  .bug:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+  .bug.squashed{animation:none;transform:scale(1,.15);opacity:0;transition:transform .2s,opacity .6s .2s;pointer-events:none}
+  @keyframes crawl{0%{transform:translateX(-60px) scaleX(1)}49%{transform:translateX(calc(100vw + 20px)) scaleX(1)}50%{transform:translateX(calc(100vw + 20px)) scaleX(-1)}99%{transform:translateX(-60px) scaleX(-1)}100%{transform:translateX(-60px) scaleX(1)}}
+  @keyframes wiggle{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .bg-float span{top:var(--y,50%);opacity:var(--o,.08)}
+    .actions{opacity:1;transform:none}
+    .bug{left:1rem}
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <p class="bug" aria-hidden="true">🐛</p>
-    <h1 class="glitch">404</h1>
-    <h2 class="title">This route wasn't found in production.</h2>
-    <p>Looks like this page wandered off and forgot to <code>git commit</code>.</p>
-    <div class="terminal">
-      <span>rafael@dev</span>:~$ curl this-page<br>
-      Error: 404 Not Found — the requested resource does not exist.<br>
-      <span>rafael@dev</span>:~$ cd ~/home
+  <div class="bg-float" id="bgFloat" aria-hidden="true"></div>
+
+  <main>
+    <h1 class="sr-only">404, page not found</h1>
+    <p class="glitch" data-text="404" aria-hidden="true">404</p>
+    <p class="sub">This page ran away from home. It was last seen near a null pointer.</p>
+
+    <section class="term" aria-label="Terminal output">
+      <div class="term__bar" aria-hidden="true"><i></i><i></i><i></i><b>dev@portfolio: ~</b></div>
+      <pre id="term" aria-hidden="true"><span class="p">$</span> cd <span id="pathText">/that-page</span>
+<span class="e">bash: cd: No such file or directory</span>
+<span class="p">$</span> sudo find / -name "the-page-you-wanted"
+<span class="m">Found: 0 pages, 1 cold coffee, 42 TODO comments</span>
+<span class="p">$</span> git blame who-broke-it
+<span class="e">fatal: probably a Friday deploy</span>
+<span class="w">Error 404: page not found. Everything else here works, I promise.</span></pre>
+    </section>
+    <p class="sr-only">The page you were looking for does not exist. Use the link below to go back to the portfolio.</p>
+
+    <div class="actions" id="actions">
+      <a class="btn btn--primary" href="/">cd ~ (take me home)</a>
+      <button class="btn btn--ghost" id="undo" type="button">Undo <kbd>Ctrl</kbd>+<kbd>Z</kbd></button>
     </div>
-    <a href="index.html" class="btn">← Back Home</a>
-  </div>
+    <p class="quip" id="quip" role="status" aria-live="polite"></p>
+  </main>
+
+  <button class="bug" id="bug" type="button" aria-label="Squash the bug">
+    <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <ellipse cx="16" cy="18" rx="7" ry="9" fill="currentColor" fill-opacity=".25"/><circle cx="16" cy="8" r="3.5" fill="currentColor" fill-opacity=".25"/>
+      <path d="M16 10v17M9.5 15 4 12M9 20H3M10 25l-5 3M22.5 15 28 12M23 20h6M22 25l5 3M13.5 5 11 2M18.5 5 21 2"/>
+    </svg>
+  </button>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (id) { return document.getElementById(id); };
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+  var actions = $('actions'), quip = $('quip'), term = $('term');
+
+  /* show the path the visitor actually tried */
+  var path = location.pathname || '/that-page';
+  if (path.length > 36) path = path.slice(0, 33) + '...';
+  $('pathText').textContent = path;
+
+  /* floating commands */
+  var layer = $('bgFloat');
+  var snippets = ['sudo rm -rf /bugs', 'git commit -m "fix 404"', 'curl -I /this-page', 'HTTP/1.1 404 Not Found', 'ping coffee.local',
+    'ls -la /missing', 'cat page.html', 'grep -r "page" /', 'echo "where am I?"', 'cd .. && cd ..', 'sleep 9999', 'npm run find-page',
+    'ssh lost@localhost', 'python find_page.py', 'flutter doctor', 'man get-lost', 'git reflog', 'undefined is not a page'];
+  var n = innerWidth < 760 ? 8 : 14, pool = snippets.sort(function () { return Math.random() - .5; }).slice(0, n);
+  pool.forEach(function (t, i) {
+    var el = document.createElement('span'); el.textContent = t;
+    el.style.setProperty('--x', (3 + ((i + Math.random() * .8) / n) * 88).toFixed(1) + '%');
+    el.style.setProperty('--y', (6 + Math.random() * 86).toFixed(1) + '%');
+    el.style.setProperty('--dur', (32 + Math.random() * 32).toFixed(1) + 's');
+    el.style.setProperty('--delay', '-' + (Math.random() * 60).toFixed(1) + 's');
+    el.style.setProperty('--fs', (11 + Math.random() * 4).toFixed(1) + 'px');
+    el.style.setProperty('--o', (.07 + Math.random() * .06).toFixed(3));
+    el.style.setProperty('--dx', ((Math.random() - .5) * 80).toFixed(0) + 'px');
+    layer.appendChild(el);
+  });
+
+  /* typed terminal (the static text in the HTML is the no-JS / reduced-motion version) */
+  var staticHtml = term.innerHTML, skip = false;
+  function escapeHtml(s) { return s.replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  var PROMPT = '<span class="p">$</span> ';
+  var script = [
+    { cmd: 'cd ' + path },
+    { out: '<span class="e">bash: cd: No such file or directory</span>' },
+    { cmd: 'sudo find / -name "the-page-you-wanted"' },
+    { out: '<span class="m">[sudo] password for dev: ••••••••</span>' },
+    { out: '<span class="m">Searching 1,337 directories...</span>', pause: 700 },
+    { out: '<span class="m">Found: 0 pages, 1 cold coffee, 42 TODO comments</span>' },
+    { cmd: 'git blame who-broke-it' },
+    { out: '<span class="e">fatal: probably a Friday deploy</span>' },
+    { out: '<span class="w">Error 404: page not found. Everything else here works, I promise.</span>' }
+  ];
+
+  async function play() {
+    var out = '';
+    term.innerHTML = PROMPT + '<span class="caret"></span>';
+    await sleep(500);
+    for (var i = 0; i < script.length && !skip; i++) {
+      var line = script[i];
+      if (line.cmd !== undefined) {
+        for (var c = 1; c <= line.cmd.length && !skip; c++) {
+          term.innerHTML = out + PROMPT + escapeHtml(line.cmd.slice(0, c)) + '<span class="caret"></span>';
+          await sleep(38 + Math.random() * 40);
+        }
+        out += PROMPT + escapeHtml(line.cmd) + '\n';
+        await sleep(260);
+      } else {
+        out += line.out + '\n';
+        term.innerHTML = out + '<span class="caret"></span>';
+        await sleep(line.pause || 380);
+      }
+    }
+    term.innerHTML = skip ? staticHtml : out + PROMPT + '<span class="caret"></span>';
+    if (skip) $('pathText').textContent = path;
+    actions.classList.add('on');
+  }
+
+  if (reduce) { actions.classList.add('on'); }
+  else {
+    var stop = function () { skip = true; };
+    document.addEventListener('pointerdown', stop, { once: true });
+    document.addEventListener('keydown', stop, { once: true });
+    setTimeout(function () { actions.classList.add('on'); }, 12000);   // safety net
+    play();
+  }
+
+  /* fake undo */
+  var quips = [
+    'Nothing to undo. You cannot Ctrl+Z a 404.',
+    'Still nothing. Have you tried turning it off and on again?',
+    'The page is not in the recycle bin either.',
+    'OK that is enough. Try the big blue button.'
+  ], q = 0, undo = $('undo');
+  function tryUndo() {
+    quip.textContent = quips[Math.min(q++, quips.length - 1)];
+    undo.classList.remove('shake'); void undo.offsetWidth; undo.classList.add('shake');
+  }
+  undo.addEventListener('click', tryUndo);
+  document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); tryUndo(); }
+  });
+
+  /* squash the bug */
+  var bug = $('bug'), squashed = 0;
+  var bugLines = ['Bug squashed. You are hired.', 'Another one down. Senior developer unlocked.', 'That was a feature, but fine.'];
+  bug.addEventListener('click', function () {
+    bug.classList.add('squashed');
+    quip.textContent = bugLines[squashed++ % bugLines.length];
+    setTimeout(function () { bug.classList.remove('squashed'); }, 4000);
+  });
+})();
+</script>
 </body>
 </html>
